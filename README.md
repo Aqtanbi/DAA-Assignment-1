@@ -67,3 +67,70 @@ Worst-case recursion depth with smaller-partition recursion: O(log n)
 Extra space: O(log n) for the recursion stack
 
 The worst case occurs when the pivot repeatedly produces highly unbalanced partitions, for example when one partition contains almost all elements and the other contains almost none.
+## 3. Deterministic Select
+
+Deterministic Select is used to find the `k`-th smallest element in an array without sorting the entire array.
+
+The index `k` is zero-based. For example, if the sorted array is:
+
+`[1, 2, 4, 6, 7, 9]`
+
+then:
+
+* `k = 0` returns `1`
+* `k = 2` returns `4`
+* `k = 5` returns `9`
+
+### Implementation
+
+The algorithm uses the median-of-medians technique to choose a pivot.
+
+The implementation works as follows:
+
+1. The current array range is divided into groups of at most five elements.
+2. Each group is sorted using Bubble Sort.
+3. The median element of every group is placed into a separate array.
+4. The medians array is sorted, and its middle element is selected as the pivot.
+5. The original array is partitioned around the pivot.
+6. The algorithm compares the pivot position with `k`:
+    * If the pivot position equals `k`, the pivot is the answer.
+    * If `k` is smaller than the pivot position, the algorithm continues in the left partition.
+    * If `k` is greater than the pivot position, the algorithm continues in the right partition.
+
+Only the partition containing the required element is processed recursively. The other partition is ignored.
+
+For ranges containing five or fewer elements, the algorithm sorts the range directly and returns the element at index `k`.
+
+### Partitioning
+
+The partition operation is similar to the partitioning step in QuickSort.
+
+The pivot is first moved to the end of the current range. Then, the algorithm moves all elements smaller than the pivot to the left side.
+
+Finally, the pivot is placed between the smaller and larger elements. The method returns the final index of the pivot.
+
+The partition operation is performed in-place and does not require an additional array.
+
+### Complexity
+
+The theoretical median-of-medians algorithm has the following recurrence:
+
+`T(n) = T(n/5) + T(7n/10) + Θ(n)`
+
+The first recursive term finds the median of the medians. The second term processes only the partition that may contain the required element. The partitioning and grouping operations take linear time.
+
+Therefore, the theoretical worst-case time complexity is:
+
+**Time complexity: Θ(n)**
+
+**Auxiliary space: O(n)** for the medians array used by the current implementation.
+
+**Recursion depth: O(log n)** for the selection process.
+
+### Current implementation
+
+The Deterministic Select implementation was tested by comparing its results with the corresponding elements of a sorted copy of the same array.
+
+The algorithm correctly returns the expected `k`-th smallest element for the tested arrays.
+
+The current implementation uses sorting of the medians array to select the pivot. Therefore, the implementation demonstrates the median-of-medians idea, but the pivot-selection step can be further optimized to achieve the theoretical linear-time bound strictly.

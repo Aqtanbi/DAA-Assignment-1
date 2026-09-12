@@ -13,5 +13,22 @@ public class Main {
         qsort.sort(arrayq, 0, arrayq.length - 1);
         System.out.println("QuickSort" + Arrays.toString(arrayq));
 
+        int[] arrayd = {5, 6, 1, 0, -10, 200, 1, 3, 2, 5, 4, 7, 8, 9, 16};
+        DeterministicSelector mom = new DeterministicSelector();
+        System.out.println("DeterministicSelector launch:");
+        for (int k = 0; k < arrayd.length; k++) {
+            int[] copy = arrayd.clone();
+
+            int result = mom.select(copy, k);
+
+            Arrays.sort(copy);
+
+            System.out.println(
+                    "k = " + k +
+                            ", result = " + result +
+                            ", expected = " + copy[k]
+            );
+        }
+
     }
 }
