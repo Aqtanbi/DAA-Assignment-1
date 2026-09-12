@@ -39,3 +39,31 @@ Therefore:
 ### Current implementation
 
 The MergeSort implementation was tested on several integer arrays and produced correctly sorted results.
+## 2. QuickSort
+
+QuickSort was implemented using randomized pivot selection and in-place partitioning.
+
+For each partition, a random element from the current range is selected as the pivot. The pivot is moved to the end of the range, and the remaining elements are partitioned around it.
+
+The implementation uses the following strategy:
+
+Randomized pivot selection
+In-place partitioning
+No auxiliary array for partitioning
+Recursion into the smaller partition
+Iteration over the larger partition using a while loop
+
+Recursing only into the smaller partition helps keep the recursion stack small.
+
+### Complexity:
+
+**Typical time: O(n log n)**
+
+**Worst-case time: O(n²)**
+
+**Typical recursion depth: O(log n)**
+
+Worst-case recursion depth with smaller-partition recursion: O(log n)
+Extra space: O(log n) for the recursion stack
+
+The worst case occurs when the pivot repeatedly produces highly unbalanced partitions, for example when one partition contains almost all elements and the other contains almost none.
