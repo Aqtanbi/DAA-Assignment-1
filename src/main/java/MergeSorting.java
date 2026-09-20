@@ -9,6 +9,7 @@ public class MergeSorting {
         for (int i = start + 1; i <= end; i++) {
             int key = array[i];
             int j = i - 1;
+            
             while (j >= start && array[j] > key) {
                 array[j + 1] = array[j];
                 j--;
