@@ -21,22 +21,15 @@ public class ClosestPairSolver {
 
     private double closestPair(Point[] pointsByX, Point[] pointsByY) {
         int n = pointsByX.length;
-
-        // Base case
         if (n <= 3) {
             return bruteForce(pointsByX);
         }
-
-        // Divide
         int middle = n / 2;
 
         Point[] leftX = Arrays.copyOfRange(pointsByX, 0, middle);
         Point[] rightX = Arrays.copyOfRange(pointsByX, middle, n);
 
         double middleX = pointsByX[middle].getX();
-
-        // Create a set of points belonging to the left half.
-        // This correctly handles points with equal X coordinates.
         Set<Point> leftSet = new HashSet<>(Arrays.asList(leftX));
 
         Point[] leftY = new Point[leftX.length];
@@ -53,13 +46,11 @@ public class ClosestPairSolver {
             }
         }
 
-        // Conquer
         double leftDistance = closestPair(leftX, leftY);
         double rightDistance = closestPair(rightX, rightY);
 
         double minDistance = Math.min(leftDistance, rightDistance);
 
-        // Build strip around the middle line
         Point[] strip = new Point[n];
         int stripSize = 0;
 
@@ -68,9 +59,6 @@ public class ClosestPairSolver {
                 strip[stripSize++] = point;
             }
         }
-
-        // Check points in the strip.
-        // pointsByY is already sorted by Y.
         for (int i = 0; i < stripSize; i++) {
             for (int j = i + 1;
                  j < stripSize &&
